@@ -1,0 +1,13 @@
+h1 {
+  color: rgb(244, 249, 248);
+  font-family: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+  background-color: rgb(187, 0, 255);
+  font-style: italic;
+}
+
+p {
+  color: rgb(244, 249, 248);
+  font-family: "Courier New", Courier, monospace;
+  background-color: #6a0a5d;
+  padding: 1%;
+}

@@ -1,6 +1,6 @@
 
 exports.landing_page = function(req, res) {
-            res.render('home', {
+            res.render('home1', {
                 'title': 'home',
             })
 }
@@ -9,7 +9,6 @@ exports.contact = function(req, res) {
     'title': 'Contact Us'
     })
 }
-
 exports.catelogueP = function(req, res) {
     res.render('catelogueP', {
     'title': 'Perishable Catelogue'

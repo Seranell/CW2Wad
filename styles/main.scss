@@ -1,0 +1,17 @@
+$TextColor: rgb(244, 249, 248);
+$headerTextFont:"Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+$headerTextBackgroundColor: rgb(187, 0, 255);
+$headerTextDecoration: italic;
+$BodyTextBackgroundColor:#6a0a5d;
+h1 {
+  color: $TextColor;
+  font-family: $headerTextFont;
+  background-color: $headerTextBackgroundColor;
+  font-style:$headerTextDecoration ;
+}
+p {
+  color: $TextColor;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: $BodyTextBackgroundColor;
+  padding:1%;
+}
