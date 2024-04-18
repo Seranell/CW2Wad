@@ -1,1 +1,45 @@
 {{! Home after login }}
+{{! home before login }}
+<html>
+    <head>
+        {{>header}}
+    </head>
+    <body>
+    
+    {{! pre-login nav }}
+  <div style="position: relative;">
+    <div style="position: absolute; top: 0; left: 7rem; z-index: 1;">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a style="font-size: 1.2rem" class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                        <a style="font-size: 1.2rem" class="nav-link text-white" href="/about">About</a>
+                        <a style="font-size: 1.2rem" class="nav-link text-white" href="/contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div style="position: absolute; right: 1rem; z-index: 1;" class="my-3">
+    <a href="/login" class="btn btn-outline-light me-2">Login</a>
+    <a href="/register" class="btn btn-outline-light">Sign Up</a>
+</div>
+    
+    {{! Banner image }}
+    <div class = "object-fit-fill w-100"
+         style = "background-image: url('/banner.png'); 
+                  background-repeat: no-repeat; 
+                  background-size: 100%;
+                  height:70%;">
+    </div>
+<div class = 'd-flex justify-content-center'>
+    <div class = 'w-50 my-3'>
+        <h1 class = 'text-center'>Our Goal</h1>
+        <p class = 'text-center'>We work with local suppliers to help reduce food waste while also at the same time, 
+            allowing individuals to access food for a cheap affordable price. Join us in helping 
+            to reduce food waste and help support local communities with us.</p>
+    </div>
+</div>
+    </body>
+</html>
