@@ -17,7 +17,8 @@ router.get("/logout", controller.logout);
 
 router.get('/catelogueP', controller.catelogueP);
 router.get('/catelogueNP', controller.catelogueNP);
-router.get('/additem', controller.additem);
+router.get('/additem', verify, controller.show_add_item_page);
+router.post('/additem', verify, controller.add_new_item);
 router.get('/about', controller.about);
 router.get('/aboutUs',verify, controller.aboutUs);
 router.get('/contact', controller.contact);

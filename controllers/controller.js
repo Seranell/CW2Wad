@@ -1,8 +1,49 @@
+//controller
 const pantryDAO = require("../models/pantryModel");
 const userDao = require("../models/userModel.js");
+const path = require('path');
+const multer = require('multer');
 
-const db = new pantryDAO();
+const db = new pantryDAO('./data/pantry'); // Adjust the file path as needed
 db.init();
+
+
+
+
+// Set storage engine
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './public/uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Init upload
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 }, // 1MB max file size
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
+  }
+}).single('image');
+
+// Check file type
+function checkFileType(file, cb) {
+  // Allowed extensions
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check extension
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime type
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb('Error: Images only!');
+  }
+}; 
 
 exports.show_login = function (req, res) {
   res.render("user/login");
@@ -129,11 +170,36 @@ exports.catelogueNP = function(req, res) {
   });
 };
 
-exports.additem = function(req, res) {
-  res.render('additem', {
-      'title': 'Add item'
-  });
+exports.show_add_item_page = function(req, res) {
+    res.render('additem', {
+        title: 'Add Item',
+        user: req.user // Pass the user data if needed
+    });
 };
+
+exports.add_new_item = function(req, res) {
+    upload(req, res, (err) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send('Error uploading image');
+      } else {
+        const { name, description, category, expiryDate } = req.body;
+        const image = '/uploads/' + req.file.filename;
+  
+        // Call the method to add a new item to the pantry
+        return db.addPerishableFood(name, description, category, expiryDate, image)
+          .then(() => {
+            console.log('Item added successfully');
+            res.redirect('/catelogueP'); // Redirect after successful insertion
+          })
+          .catch((err) => {
+            console.log('Error adding item:', err);
+            res.status(500).send('Error adding item');
+          });
+      }
+    });
+  };
+
 
 exports.about = function(req, res) {
   res.render('about', {

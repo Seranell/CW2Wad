@@ -1,8 +1,38 @@
+{{! additem }}
 <html>
-    <head>
-        {{>header}}
-    </head>
-    <body>
-        <h1>{{title}}</h1>
-        </body>
-        </html>
+<head>
+  {{>header}}
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="my-4">Add New Item</h1>
+    <form action="/additem" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input type="text" class="form-control" id="category" name="category" required>
+      </div>
+      <div class="mb-3">
+        <label for="expiryDate" class="form-label">Expiry Date</label>
+        <input type="date" class="form-control" id="expiryDate" name="expiryDate" required>
+      </div>
+      <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" required>
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
