@@ -10,16 +10,18 @@ router.post('/login', login, controller.handle_login);
 router.get("/", controller.landing_page);
 router.get('/new',verify,controller.show_new_entries);
 router.post('/new', verify, controller.post_new_entry);
-router.get('/posts/:author', controller.show_user_entries);
 router.get('/register', controller.show_register_page);
 router.post('/register', controller.post_new_user);
 router.get("/loggedIn",verify, controller.loggedIn_landing);
 router.get("/logout", controller.logout);
-router.get('/contact', controller.contact);
+
 router.get('/catelogueP', controller.catelogueP);
 router.get('/catelogueNP', controller.catelogueNP);
 router.get('/additem', controller.additem);
 router.get('/about', controller.about);
+router.get('/aboutUs',verify, controller.aboutUs);
+router.get('/contact', controller.contact);
+router.get('/contactus',verify, controller.contactUs);
 router.get('/account', controller.account);
 
 router.use(function(req, res) {

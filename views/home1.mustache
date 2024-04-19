@@ -4,26 +4,9 @@
         {{>header}}
     </head>
     <body>
-    
+    {{>body}}
     {{! pre-login nav }}
-  <div style="position: relative;">
-    <div style="position: absolute; top: 0; left: 7rem; z-index: 1;">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a style="font-size: 1.2rem" class="nav-link active text-white" aria-current="page" href="#">Home</a>
-                        <a style="font-size: 1.2rem" class="nav-link text-white" href="/about">About</a>
-                        <a style="font-size: 1.2rem" class="nav-link text-white" href="/contact">Contact</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div style="position: absolute; right: 1rem; z-index: 1;" class="my-3">
-    <a href="/login" class="btn btn-outline-light me-2">Login</a>
-    <a href="/register" class="btn btn-outline-light">Sign Up</a>
-</div>
+        {{>navbarPre}}
     
     {{! Banner image }}
     <div class = "object-fit-fill w-100"

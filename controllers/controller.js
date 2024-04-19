@@ -1,8 +1,8 @@
 //controller
-const pantryDAO = require("../models/pantryModel");
+const FoodItem = require('../models/pantryModel.js');
 const userDao = require("../models/userModel.js");
 
-const db = new pantryDAO();
+const db = new FoodItem();
 db.init();
 
 exports.show_login = function (req, res) {
@@ -103,12 +103,27 @@ exports.contact = function(req, res) {
       'title': 'Contact Us'
   });
 };
+exports.contactUs = function(req, res) {
+    res.render('contact2', {
+        'title': 'Contact Us'
+    });
+  };
 
 exports.catelogueP = function(req, res) {
-  res.render('catelogueP', {
-      'title': 'Perishable Catelogue'
-  });
-};
+    // Assuming FoodItem.getAllItems() returns a promise resolving to an array of food items
+    FoodItem.getAllItems()
+      .then(foodItems => {
+        res.render('catelogueP', {
+          title: 'Food Items',
+          user: req.user, // Assuming req.user contains information about the logged-in user
+          foodItems: foodItems // Pass the array of food items to the template
+        });
+      })
+      .catch(err => {
+        console.error('Error fetching food items:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  };
 
 exports.catelogueNP = function(req, res) {
   res.render('catelogueNP', {
@@ -127,6 +142,12 @@ exports.about = function(req, res) {
       'title': 'About Us'
   });
 };
+
+exports.aboutUs = function(req, res) {
+    res.render('about2', {
+        'title': 'About Us'
+    });
+  };
 
 exports.account = function(req, res) {
   res.render('account', {
