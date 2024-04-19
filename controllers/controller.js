@@ -1,8 +1,7 @@
-//controller
-const FoodItem = require('../models/pantryModel.js');
+const pantryDAO = require("../models/pantryModel");
 const userDao = require("../models/userModel.js");
 
-const db = new FoodItem();
+const db = new pantryDAO();
 db.init();
 
 exports.show_login = function (req, res) {
@@ -12,7 +11,7 @@ exports.show_login = function (req, res) {
 exports.handle_login = function (req, res) {
   // res.redirect("/new");
   res.render("home2", {
-    title: "Guest Book",
+    title: "Home",
     user: "user"
   });
 };
@@ -36,20 +35,21 @@ exports.post_new_entry = function (req, res) {
 };
 
 exports.show_user_entries = function (req, res) {
-  let user = req.params.author;
-  db.getEntriesByUser(user)
-    .then((entries) => {
-      res.render("entries", {
-        title: "Guest Book",
-        user: "user",
-        entries: entries,
+    let user = req.params.author;
+    db.getEntriesByUser(user)
+      .then((entries) => {
+        res.render("entries", {
+          title: "Guest Book",
+          user: "user",
+          entries: entries,
+        });
+      })
+      .catch((err) => {
+        console.log("Error: ");
+        console.log(JSON.stringify(err));
       });
-    })
-    .catch((err) => {
-      console.log("Error: ");
-      console.log(JSON.stringify(err));
-    });
-};
+  };
+  
 
 exports.show_register_page = function (req, res) {
   res.render("user/register");
@@ -109,21 +109,19 @@ exports.contactUs = function(req, res) {
     });
   };
 
-exports.catelogueP = function(req, res) {
-    // Assuming FoodItem.getAllItems() returns a promise resolving to an array of food items
-    FoodItem.getAllItems()
-      .then(foodItems => {
-        res.render('catelogueP', {
-          title: 'Food Items',
-          user: req.user, // Assuming req.user contains information about the logged-in user
-          foodItems: foodItems // Pass the array of food items to the template
+  exports.catelogueP = function(req, res) {
+    
+    db.getAllPerishableFoods()
+      .then((list) => {
+        res.render("catelogueP", {
+          title: "Perishable Food Catalogue",
+          entries: list,
         });
       })
-      .catch(err => {
-        console.error('Error fetching food items:', err);
-        res.status(500).send('Internal Server Error');
+      .catch((err) => {
+        console.log("promise rejected", err);
       });
-  };
+};
 
 exports.catelogueNP = function(req, res) {
   res.render('catelogueNP', {
