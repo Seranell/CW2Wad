@@ -199,7 +199,12 @@ exports.add_new_item = function(req, res) {
       }
     });
   };
-
+  
+  // Route to trigger the removal of expired food items
+  exports.remove_expired_items = function(req, res) {
+    db.removeExpiredItems(); // Call the method to remove expired items
+      res.send('Expired items removed.'); // Send a response indicating the completion of the action
+  };
 
 exports.about = function(req, res) {
   res.render('about', {

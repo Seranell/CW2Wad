@@ -24,6 +24,8 @@ router.get('/aboutUs',verify, controller.aboutUs);
 router.get('/contact', controller.contact);
 router.get('/contactus',verify, controller.contactUs);
 router.get('/account', controller.account);
+//removes all expired food
+router.get('/remove',verify, controller.remove_expired_items);
 
 router.use(function(req, res) {
         res.status(404);

@@ -34,7 +34,7 @@ class PantryModel {
             name: 'Apple',
             description: 'A juicy and delicious fruit.',
             category: 'Fruit',
-            expiryDate: '21-04-2024',
+            expiryDate: '2024-04-21', // Changed to ISO date format (YYYY-MM-DD)
             quantity: '10',
             image: 'https://www.collinsdictionary.com/images/full/apple_158989157.jpg' 
         });
@@ -44,13 +44,24 @@ class PantryModel {
             name: '1 Pint of Milk',
             description: 'Fresh dairy milk.',
             category: 'Dairy',
-            expiryDate: '27-04-2024',
+            expiryDate: '2024-04-27', // Changed to ISO date format (YYYY-MM-DD)
             quantity: '5',
             image: 'https://www.crumbsfoodco.com/wp-content/uploads/2019/12/1-pint-of-mik-2-small.jpg' 
         });
         console.log('Perishable food item "Milk" inserted');
     }
 
+    // Method to remove expired food items from the database
+    removeExpiredItems() {
+        const currentDate = new Date().toISOString(); // Get current date in ISO format (YYYY-MM-DD)
+        this.db.remove({ expiryDate: { $lt: currentDate } }, { multi: true }, (err, numRemoved) => {
+            if (err) {
+                console.error('Error removing expired items:', err);
+            } else {
+                console.log(numRemoved + ' expired items removed from the database.');
+            }
+        });
+    }
 
     // Adds perishable foods
     addPerishableFood(name, description, category, expiryDate, image, quantity = 1) {
