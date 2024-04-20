@@ -1,0 +1,36 @@
+<html>
+<head>
+    {{>header}}
+</head>
+<body>
+    <h1>Delete User</h1>
+    <div class="container">
+        <ul class="list-group">
+            {{#users}}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <span>{{user}}</span> 
+                    <span class="badge bg-success">{{role}}</span>
+                </div>
+                <button onclick="confirmDelete('{{user}}')" class="btn btn-danger">Delete</button>
+            </li>
+            {{/users}}
+        </ul>
+    </div>
+
+    <form id="deleteForm" action="/confirmdelete" method="post" style="display: none;">
+        <input type="hidden" name="username" id="username">
+        <button type="submit" id="submitButton">Delete User</button>
+    </form>
+
+{{! confirm the deletation of a user }}
+    <script>
+        function confirmDelete(username) {
+            if (confirm(`Are you sure you want to delete the user ${username}?`)) {
+                document.getElementById('username').value = username;
+                document.getElementById('deleteForm').submit();
+            }
+        }
+    </script>
+</body>
+</html>

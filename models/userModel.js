@@ -1,4 +1,3 @@
-//userModel
 const Datastore = require("nedb");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -6,20 +5,19 @@ const saltRounds = 10;
 class UserDAO {
     constructor(dbFilePath) {
         if (dbFilePath) {
-            //embedded
-            this.db = new Datastore({ filename: dbFilePath,
-            autoload: true });
+            // Use the provided database file path
+            this.db = new Datastore({ filename: dbFilePath, autoload: true });
         } else {
-            //in memory
-            this.db = new Datastore();
+            // Use the default database file path
+            this.db = new Datastore({ filename: 'users.db', autoload: true });
         }
     }
-    // for the demo the password is the bcrypt of the user name
+
+    // Initialize method to insert demo users
     init() {
         this.db.insert({
             user: 'Peter',
-            password:
-            '$2b$10$I82WRFuGghOMjtu3LLZW9OAMrmYOlMZjEEkh.vx.K2MM05iu5hY2C',
+            password: '$2b$10$I82WRFuGghOMjtu3LLZW9OAMrmYOlMZjEEkh.vx.K2MM05iu5hY2C',
             role: "user"
         });
         this.db.insert({
@@ -35,6 +33,8 @@ class UserDAO {
         });
         return this;
     }
+
+    // Method to create a new user
     create(username, password) {
         const that = this;
         bcrypt.hash(password, saltRounds).then(function(hash) {
@@ -43,26 +43,52 @@ class UserDAO {
                 password: hash,
             };
             that.db.insert(entry, function (err) {
-            if (err) {
-            console.log("Can't insert user: ", username);
-            }
+                if (err) {
+                    console.log("Can't insert user: ", username);
+                }
             });
         });
     }
+
+    delete(username, cb) {
+        this.db.remove({ 'user': username }, { multi: true }, function (err, numRemoved) {
+            if (err) {
+                console.log("Error deleting user: ", username);
+                return cb(err);
+            }
+            console.log("Deleted user: ", username);
+            return cb(null, numRemoved);
+        });
+    }
+    getAllUsers(cb) {
+        this.db.find({}, function (err, users) {
+            if (err) {
+                console.error("Error fetching users:", err);
+                return cb(err);
+            }
+            return cb(null, users);
+        });
+    }
+
+    
     lookup(user, cb) {
         this.db.find({'user': user}, function (err, entries) {
-        if (err) {
-            return cb(null, null);
-        } else {
-            if (entries.length == 0) {
+            if (err) {
                 return cb(null, null);
-            }
+            } else {
+                if (entries.length == 0) {
+                    return cb(null, null);
+                }
                 return cb(null, entries[0]);
             }
         });
     }
 }
-const dao = new UserDAO();
+
+
+
+// Initialize and export the DAO instance
+const dao = new UserDAO('users.db');
 dao.init();
 
 module.exports = dao;

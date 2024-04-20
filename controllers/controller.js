@@ -4,7 +4,7 @@ const userDao = require("../models/userModel.js");
 const path = require('path');
 const multer = require('multer');
 
-const db = new pantryDAO('./data/pantry'); // Adjust the file path as needed
+const db = new pantryDAO('./data/pantry');
 db.init();
 
 
@@ -226,7 +226,61 @@ exports.account = function(req, res) {
 };
 
 exports.adminPage = function(req, res){
+    const username = req.body.username;
     res.render('admin/adminPage',{
-        'title' : 'Admin page'
+        'title' : 'Admin page',
+        username: username
     } )
 }
+exports.addPantry = function(req, res){
+    res.render('admin/addPantry',{
+        'title' : 'Add User'
+    } )
+}
+
+exports.admin_post_new_user = function (req, res) {
+    const user = req.body.username;
+    const password = req.body.pass;
+    const role = req.body.role;
+  
+    if (!user || !password) {
+      res.send(401, "no user or no password");
+      return;
+    }
+    userDao.lookup(user, function (err, u) {
+      if (u) {
+        res.send(401, "User exists:", user);
+        return;
+      }
+      userDao.create(user, password,role);
+    });
+    res.render("admin/pantryAdded")
+   };
+
+   exports.show_delete_user_page = function(req, res) {
+    userDao.getAllUsers(function(err, users) {
+        if (err) {
+            console.error("Error fetching users:", err);
+            res.status(500).send("Error fetching users");
+            return;
+        }
+        res.render("admin/deletePantry", { users: users });
+    });
+};
+
+exports.confirm_delete_user = function(req, res) {
+    const username = req.body.username;
+
+    userDao.delete(username, function(err, numRemoved) {
+        if (err) {
+            console.error("Error deleting user:", err);
+            res.status(500).send("Error deleting user");
+            return;
+        }
+        if (numRemoved > 0) {
+            res.render("admin/pantryDeleted");
+        } else {
+            res.status(404).send("User not found");
+        }
+    });
+};

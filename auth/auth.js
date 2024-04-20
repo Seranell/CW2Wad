@@ -33,6 +33,12 @@ exports.login = function(req, res, next) {
                 user: "user",
               });
             }
+            if (payload.role == "pantry") {
+              return res.render("pantry/pantryHome", {
+                title: "Pantry Home",
+                user: "user",
+              });
+            }
             if (payload.role == "user") {
               return res.render("home2", {
                 title: "home",

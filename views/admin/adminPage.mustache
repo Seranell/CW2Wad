@@ -1,27 +1,60 @@
-{{! home before login }}
+<!-- home.mustache -->
 <html>
-    <head>
-        {{>header}}
-    </head>
-    <body>
+<head>
+    {{>header}}
+</head>
+<body>
     {{>body}}
-    {{! pre-login nav }}
-        {{>navbar}}
+    <!-- Banner image -->
+    <div class="position-relative object-fit-fill w-100" style="background-image: url('/banner.png'); background-repeat: no-repeat; background-size: 100%; height: 70%;">
+        <!-- Welcome message -->
+        <div class="position-absolute top-0 start-50 translate-middle-x my-5 py-5">
+            <h1 class="text-center text-light">Welcome Back, Admin!</h1>
+        </div>
+    </div>
     
-    {{! Banner image }}
-    <div class = "object-fit-fill w-100"
-         style = "background-image: url('/banner.png'); 
-                  background-repeat: no-repeat; 
-                  background-size: 100%;
-                  height:70%;">
+    <!-- Square links -->
+    <div class="d-flex justify-content-center">
+        <div class="w-50 my-3">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <!-- Catalog link -->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Perishable Catalog</h5>
+                            <p class="card-text">Look through the perishable Catelogue</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/catelogueP" class="btn btn-success">Go to Catalog</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add User link -->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add User</h5>
+                            <p class="card-text">Add a new user to the system.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/addpantry" class="btn btn-success">Add User</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete User link -->
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete User</h5>
+                            <p class="card-text">Delete an existing user from the system.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/deleteuser" class="btn btn-success">Delete User</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-<div class = 'd-flex justify-content-center'>
-    <div class = 'w-50 my-3'>
-        <h1 class = 'text-center'>Welcome Admin</h1>
-        <p class = 'text-center'>We work with local suppliers to help reduce food waste while also at the same time, 
-            allowing individuals to access food for a cheap affordable price. Join us in helping 
-            to reduce food waste and help support local communities with us.</p>
-    </div>
-</div>
-    </body>
+</body>
 </html>
