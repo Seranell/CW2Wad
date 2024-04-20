@@ -9,32 +9,31 @@ class PantryModel {
         console.log('DB connected to ' + fullPath);
     }
 
-    // Function to seed the database with initial perishable food items
+    // Checks if database has items and adds them if not
     init() {
-        // Check if the database has already been seeded
+        
         this.db.findOne({ name: 'Apple' }, (err, doc) => {
             if (err) {
                 console.error('Error checking database:', err);
                 return;
             }
-            // If the item 'Apple' is found, database has already been seeded
+            
             if (doc) {
                 console.log('Database has already been seeded.');
                 return;
             }
-            // If 'Apple' is not found, seed the database
+            
             this.seedDatabase();
         });
     }
 
-    // Seed the database with initial perishable food items
+    // Automaticlly add items to Database
     seedDatabase() {
-        // Insert initial perishable food items here
         this.db.insert({
             name: 'Apple',
             description: 'A juicy and delicious fruit.',
             category: 'Fruit',
-            expiryDate: '2024-04-21', // Changed to ISO date format (YYYY-MM-DD)
+            expiryDate: '2024-04-21',
             quantity: '10',
             image: 'https://www.collinsdictionary.com/images/full/apple_158989157.jpg' 
         });
@@ -44,16 +43,16 @@ class PantryModel {
             name: '1 Pint of Milk',
             description: 'Fresh dairy milk.',
             category: 'Dairy',
-            expiryDate: '2024-04-27', // Changed to ISO date format (YYYY-MM-DD)
+            expiryDate: '2024-04-27',
             quantity: '5',
             image: 'https://www.crumbsfoodco.com/wp-content/uploads/2019/12/1-pint-of-mik-2-small.jpg' 
         });
         console.log('Perishable food item "Milk" inserted');
     }
 
-    // Method to remove expired food items from the database
+    // Removes expired food
     removeExpiredItems() {
-        const currentDate = new Date().toISOString(); // Get current date in ISO format (YYYY-MM-DD)
+        const currentDate = new Date().toISOString(); 
         this.db.remove({ expiryDate: { $lt: currentDate } }, { multi: true }, (err, numRemoved) => {
             if (err) {
                 console.error('Error removing expired items:', err);
@@ -71,7 +70,7 @@ class PantryModel {
             category: category,
             expiryDate: expiryDate,
             image: image,
-            quantity: quantity  // Make quantity optional, default to 0 if not provided
+            quantity: quantity
         };
     
         return new Promise((resolve, reject) => {

@@ -133,6 +133,7 @@ exports.logout = function (req, res) {
   res.clearCookie("jwt").status(200).redirect("/");
 };
 
+
 exports.landing_page = function(req, res) {
   res.render('home1', {
       'title': 'home',
@@ -224,3 +225,8 @@ exports.account = function(req, res) {
   });
 };
 
+exports.adminPage = function(req, res){
+    res.render('admin/adminPage',{
+        'title' : 'Admin page'
+    } )
+}
