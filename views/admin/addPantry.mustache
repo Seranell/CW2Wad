@@ -1,20 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete User</title>
+    {{>header}}
 </head>
-<body>
-    <h1>Delete User</h1>
-    <form action="/deleteuser" method="POST">
-        <label for="username">Select User:</label>
-        <select name="username" id="username">
-            {{#users}}
-            <option value="{{username}}">{{username}}</option>
-            {{/users}}
+<body class="container">
+<div class="text-right" style="margin-bottom: 1em;">
+{{^user}}
+  <a id="login" href="/register" class="btn btn-primary">
+    Register
+  </a>
+  <a id="login" href="/login" class="btn btn-primary">
+    Sign in
+  </a>
+{{/user}}
+{{#user}}
+    <a id="View posts" href="/loggedIn" class="btn btn-primary">
+   View posts
+  </a>
+<a href="/new" class="btn btn-primary">
+Write in the guestbook
+</a>
+
+  <a id="logout" href="/logout" class="btn btn-primary">
+    Sign out
+  </a>
+{{/user}}
+</div>
+<h1>{{title}}</h1>
+<div>
+<h2>Add users</h2>
+<div class="card">
+    <div class="card-body">
+          <h4 class="card-title">Add new user</h4>
+   <form method="post" action="/adminPostNewPantry">
+    <div class="form-group">
+        {{user-name-error}}
+        <label for="username">User Name</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter user name" required>
+    </div>
+   <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control" name="role" id="role" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value = "pantry">Pantry</option>
         </select>
-        <button type="submit">Delete User</button>
-    </form>
+    </div>
+    <div class="form-group">
+        <label for="password">Password (8 characters minimum)</label>
+        <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter password" minlength="8" required>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Register" class="btn btn-primary">
+    </div>
+</form>
+
+    </div>
+  </div>
+</div>
 </body>
 </html>
