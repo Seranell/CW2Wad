@@ -3,10 +3,11 @@
     {{>header}}
 </head>
 <body class="container">
+<div class = 'my-5 py-5 '>
     <h1>{{title}}</h1>
     <h2>Sign In</h2>
-    <div id="formContent">
-        <!-- Login Form -->
+    <div id="formContent" class = 'd-flex'>
+        <div class = 'flex-grow-1'>
         <form method="POST" action="/login">
             <div class="form-group">
                 <label for="username" class="col-sm-2 col-formlabel">
@@ -24,8 +25,16 @@
                     <input type="password" class="form-control"  id="password" name="password"placeholder="password">
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary" value="Sign In">
+            <div class = 'my-5'>
+            <input type="submit" class="btn btn-success" value="Sign In">
+            <a href="/register" class="btn btn-success me-2 mx-5">Sign Up!</a>
+            </div>
         </form>
+        </div>
+       <div class="col-md-4 d-flex">
+                <img src="/volenteer1.jpg" class="img-fluid h-100" alt="Image">
+            </div>
+    </div>
     </div>
 </body>
 </html>

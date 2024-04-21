@@ -16,12 +16,9 @@ exports.login = function(req, res, next) {
             return res.render("user/register");
         }
 
-        // Compare provided password with stored password
         bcrypt.compare(password, user.password, function (err, result) {
           if (result) {
-            //use the payload to store information about the user such as username.
             let payload = { username: username, role: user.role };
-            //create the access token
             let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
               expiresIn: 300,
             });
@@ -47,7 +44,7 @@ exports.login = function(req, res, next) {
             }
             next();
           } else {
-            return res.render("user/login"); //res.status(403).send();
+            return res.render("user/login");
           }
         });
       });
@@ -63,25 +60,23 @@ exports.verify = function(req, res, next) {
         payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
         next();
     } catch (e) {
-        // If an error occurred, return request unauthorized error
         res.status(401).send();
     }
 };
 exports.verifyPantry = function(req, res, next) {
   let accessToken = req.cookies.jwt;
   if (!accessToken) {
-      return res.status(403).send(); // No token provided
+      return res.status(403).send();
   }
   let payload;
   try {
       payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
       if (payload.role !== "pantry") {
-          return res.status(403).send(); // Unauthorized for non-pantry users
+          return res.status(403).send();
       }
-      next(); // User is authorized
+      next();
   } catch (e) {
-      // Token verification failed
-      res.status(401).send(); // Unauthorized
+      res.status(401).send(); 
   }
 };
 exports.verifyAdmin = function(req, res, next) {
@@ -89,7 +84,7 @@ exports.verifyAdmin = function(req, res, next) {
   let payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
 
   if (payload.role !== "admin") {
-      return res.status(403).send(); // Unauthorized for non-admin users
+      return res.status(403).send();
   }
   next();
 };

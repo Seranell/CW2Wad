@@ -5,15 +5,12 @@ const saltRounds = 10;
 class UserDAO {
     constructor(dbFilePath) {
         if (dbFilePath) {
-            // Use the provided database file path
             this.db = new Datastore({ filename: dbFilePath, autoload: true });
         } else {
-            // Use the default database file path
             this.db = new Datastore({ filename: 'users.db', autoload: true });
         }
     }
 
-    // Initialize method to insert demo users
     init() {
         this.db.insert({
             user: 'Peter',
@@ -34,7 +31,6 @@ class UserDAO {
         return this;
     }
 
-    // Method to create a new user
     create(username, password, role) {
         const that = this;
         bcrypt.hash(password, saltRounds).then(function(hash) {
@@ -86,9 +82,6 @@ class UserDAO {
     }
 }
 
-
-
-// Initialize and export the DAO instance
 const dao = new UserDAO('users.db');
 dao.init();
 

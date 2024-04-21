@@ -31,7 +31,11 @@
           <div class="card-body">
             <h5 class="card-title">{{name}}</h5>
             <p class="card-text">{{description}}</p>
+             <form action="/donate/{{_id}}" method="POST">
+                            <button type="submit" class="btn btn-primary">accept</button>
+                        </form>
           </div>
+          <div></div>
           <div class="card-footer">
             <small class="text-muted">Category: {{category}} | Expiry Date: {{expiryDate}} | Quantity: {{quantity}} | Offered By: {{author}}</small>
           </div>
@@ -44,8 +48,5 @@
       {{/entries}}
     </div>
   </div>
-   <div class="text-center mt-4">
-      <a href="/additem" class="btn btn-success">Add New Item</a>
-    </div>
 </body>
 </html> 

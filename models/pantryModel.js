@@ -1,4 +1,3 @@
-//pantryModel
 const nedb = require('nedb');
 const path = require('path');
 
@@ -9,7 +8,6 @@ class PantryModel {
         console.log('DB connected to ' + fullPath);
     }
 
-    // Checks if database has items and adds them if not
     init() {
         
         this.db.findOne({ name: 'Apple' }, (err, doc) => {
@@ -27,7 +25,6 @@ class PantryModel {
         });
     }
 
-    // Automaticlly add items to Database
     seedDatabase() {
         this.db.insert({
             name: 'Apple',
@@ -50,7 +47,6 @@ class PantryModel {
         console.log('Perishable food item "Milk" inserted');
     }
 
-    // Removes expired food
     removeExpiredItems() {
         const currentDate = new Date().toISOString(); 
         this.db.remove({ expiryDate: { $lt: currentDate } }, { multi: true }, (err, numRemoved) => {
@@ -62,7 +58,6 @@ class PantryModel {
         });
     }
 
-    // Adds perishable foods
     addPerishableFood(name, description, category, expiryDate, image, quantity = 1) {
         const perishableFood = {
             name: name,
@@ -88,7 +83,7 @@ class PantryModel {
     
     
     
-    // Returns perishable foods
+
     getAllPerishableFoods() {
         return new Promise((resolve, reject) => {
             this.db.find({}, function(err, perishableFoods) {
@@ -101,13 +96,20 @@ class PantryModel {
             });
         });
     }
-    removeItem(itemId) {
-        this.db.remove({ _id: itemId }, function(err, doc) {
-            if (err) {console.warn(err);}
+    deleteSelectedItem(itemId) {
+        return new Promise((resolve, reject) => {
+            this.db.remove({ _id: itemId }, { multi: false }, (err, numRemoved) => {
+                if (err) {
+                    console.error('Error removing item:', err);
+                    reject(err);
+                } else {
+                    console.log('Item removed from the database:', itemId);
+                    resolve(numRemoved);
+                }
+            });
         });
     }
 
-    // Get perishable food items by category
     getPerishableFoodsByCategory(category) {
         return new Promise((resolve, reject) => {
             this.db.find({ category: category }, function(err, perishableFoods) {
@@ -116,6 +118,17 @@ class PantryModel {
                 } else {
                     resolve(perishableFoods);
                     console.log('getPerishableFoodsByCategory() returns: ', perishableFoods);
+                }
+            });
+        });
+    }
+    getPerishableFoodById(itemId) {
+        return new Promise((resolve, reject) => {
+            this.db.findOne({ _id: itemId }, (err, item) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(item);
                 }
             });
         });

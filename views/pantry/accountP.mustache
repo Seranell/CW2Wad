@@ -1,0 +1,33 @@
+<html>
+<head>
+    {{>header}}
+</head>
+<body>
+    {{>navbarPantry}}
+    {{>body}}
+    <div class="object-fit-fill w-100" style="background-image: url('/pCatelogue.png'); background-repeat: no-repeat; background-size: 100%; height:50%;"></div>
+    <div class="container">
+        <h1 class="my-4">{{title}}</h1>
+        <h2>Your Accepted Donations</h2>
+        <div class="row row-cols-1 row-cols-md-4 gx-2">
+            {{#donations}}
+            <div class="col my-3">
+                <div class="card" style="width:18rem; height:28rem;">
+                    <img src="{{image}}" class="card-img-top" style="width:18rem; height:15rem; object-fit:cover;" alt="{{name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{description}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Category: {{category}} | Expiry Date: {{expiryDate}} | Quantity: {{quantity}} | Expected Arrival: {{expectedArrival}}</small>
+                    </div>
+                </div>
+            </div>
+            {{/donations}}
+            {{^donations}}
+            <p>No accepted donations available.</p>
+            {{/donations}}
+        </div>
+    </div> 
+</body>
+</html>
