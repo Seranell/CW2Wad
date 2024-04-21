@@ -21,9 +21,9 @@ class UserDAO {
             role: "user"
         });
         this.db.insert({
-            user: 'Ann',
+            user: 'Ruchazie',
             password: '$2b$10$bnEYkqZM.MhEF/LycycymOeVwkQONq8kuAUGx6G5tF9UtUcaYDs3S',
-            role: "user"
+            role: "pantry"
         });
         
         this.db.insert({
@@ -35,12 +35,13 @@ class UserDAO {
     }
 
     // Method to create a new user
-    create(username, password) {
+    create(username, password, role) {
         const that = this;
         bcrypt.hash(password, saltRounds).then(function(hash) {
             var entry = {
                 user: username,
                 password: hash,
+                role: role
             };
             that.db.insert(entry, function (err) {
                 if (err) {

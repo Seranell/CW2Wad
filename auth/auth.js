@@ -67,6 +67,23 @@ exports.verify = function(req, res, next) {
         res.status(401).send();
     }
 };
+exports.verifyPantry = function(req, res, next) {
+  let accessToken = req.cookies.jwt;
+  if (!accessToken) {
+      return res.status(403).send(); // No token provided
+  }
+  let payload;
+  try {
+      payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+      if (payload.role !== "pantry") {
+          return res.status(403).send(); // Unauthorized for non-pantry users
+      }
+      next(); // User is authorized
+  } catch (e) {
+      // Token verification failed
+      res.status(401).send(); // Unauthorized
+  }
+};
 exports.verifyAdmin = function(req, res, next) {
   let accessToken = req.cookies.jwt;
   let payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);

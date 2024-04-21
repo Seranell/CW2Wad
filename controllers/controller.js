@@ -284,3 +284,10 @@ exports.confirm_delete_user = function(req, res) {
         }
     });
 };
+
+exports.show_pantry_home = function(req, res) {
+  res.render('admin/adminPage',{
+    'title' : 'Admin page',
+    username: username
+  });  
+};
