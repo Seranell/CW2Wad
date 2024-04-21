@@ -101,7 +101,11 @@ class PantryModel {
             });
         });
     }
-    
+    removeItem(itemId) {
+        this.db.remove({ _id: itemId }, function(err, doc) {
+            if (err) {console.warn(err);}
+        });
+    }
 
     // Get perishable food items by category
     getPerishableFoodsByCategory(category) {
@@ -116,6 +120,6 @@ class PantryModel {
             });
         });
     }
+   
 }
-
 module.exports = PantryModel;

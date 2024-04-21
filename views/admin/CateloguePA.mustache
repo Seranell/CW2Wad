@@ -1,0 +1,56 @@
+{{! catelogueP }}
+<html>
+<head>
+  {{>header}}
+  <style>
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+{{>navbar}}
+<div class = "object-fit-fill w-100"
+         style = "background-image: url('/pCatelogue.png'); 
+                  background-repeat: no-repeat; 
+                  background-size: 100%;
+                  height:50%;">
+    </div>
+  <div class="container">
+    <h1 clas s= 'my-4'>{{title}}</h1>
+    <div class="row row-cols-1 row-cols-md-4 gx-2">
+      {{#entries}}
+      <div class="col my-3">
+        <div class="card" style = "width:18rem; height:30rem;">
+          <img src="{{image}}" class="card-img-top" style = "width:18erm; height:15rem; object-fit:cover;" alt="{{name}}">
+          <div class="card-body">
+            <h5 class="card-title">{{name}}</h5>
+            <p class="card-text">{{description}}</p>
+            <div class="text-center mt-4">
+              <form action="/removeItem/{{_id}}" method="POST">
+                <button type="submit" class="btn btn-danger">Remove item</button>
+              </form>
+            </div>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Category: {{category}} | Expiry Date: {{expiryDate}} | Quantity: {{quantity}} | Offered By: {{author}}</small>
+          </div>
+        </div>
+      </div>
+     
+      {{/entries}}
+      {{^entries}}
+      <p>No perishable food items available.</p>
+      {{/entries}}
+    </div>
+  </div>
+   <div class="text-center mt-4">
+      <a href="/additem" class="btn btn-success">Add New Item</a>
+    </div>
+    
+</body>
+</html> 

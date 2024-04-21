@@ -232,6 +232,22 @@ exports.adminPage = function(req, res){
         username: username
     } )
 }
+exports.cateloguePA = function(req, res) {
+    
+  db.getAllPerishableFoods()
+    .then((list) => {
+      res.render("admin/cateloguePA", {
+        title: "Perishable Food Catalogue",
+        entries: list,
+      });
+    })
+    .catch((err) => {
+      console.log("promise rejected", err);
+    });
+};
+exports.removeItem = function(req, res) {
+  
+}
 exports.addPantry = function(req, res){
     res.render('admin/addPantry',{
         'title' : 'Add User'
